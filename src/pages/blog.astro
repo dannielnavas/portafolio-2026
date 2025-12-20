@@ -63,9 +63,9 @@ const postsByYear = groupPostsByYear(posts);
     <Footer />
   </Layout>
 
-<script>
+<script define:vars={{ posts }}>
   if (typeof window !== 'undefined' && window.posthog) {
-    posthog.capture('blog_page_view', {
+    window.posthog.capture('blog_page_view', {
       page_path: '/blog',
       page_title: 'Blog',
       page_type: 'blog',

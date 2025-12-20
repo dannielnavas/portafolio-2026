@@ -29,10 +29,11 @@ const {
 </li>
 
 <script>
-  const linkElement = document.currentScript?.previousElementSibling?.querySelector('a[data-project-title]');
+  const linkElement = document.currentScript?.previousElementSibling?.querySelector<HTMLAnchorElement>('a[data-project-title]');
   if (linkElement) {
     linkElement.addEventListener('click', () => {
-      if (typeof window !== 'undefined' && window.posthog) {
+      const posthog = (window as any).posthog;
+      if (typeof window !== 'undefined' && posthog) {
         posthog.capture('project_click', {
           project_title: linkElement.getAttribute('data-project-title'),
           project_status: linkElement.getAttribute('data-project-status'),

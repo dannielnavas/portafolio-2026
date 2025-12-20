@@ -10,11 +10,15 @@
 
 <script>
   document.querySelectorAll('footer a[data-social]').forEach(link => {
-    link.addEventListener('click', () => {
-      if (typeof window !== 'undefined' && window.posthog) {
-        posthog.capture('social_link_click', {
+    link.addEventListener('click', function () {
+      // Ensure proper typing
+      if (
+        typeof window !== 'undefined' &&
+        typeof (window as any).posthog !== 'undefined'
+      ) {
+        (window as any).posthog.capture('social_link_click', {
           social_platform: link.getAttribute('data-social'),
-          social_url: link.href,
+          social_url: (link as HTMLAnchorElement).href,
           location: 'footer'
         });
       }

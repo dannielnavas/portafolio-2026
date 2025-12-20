@@ -22,7 +22,7 @@ canonicalURL="https://danniel.dev"
 
 <script>
   if (typeof window !== 'undefined' && window.posthog) {
-    posthog.capture('page_view', {
+    window.posthog.capture('page_view', {
       page_path: '/',
       page_title: 'Home',
       page_type: 'home'

@@ -100,9 +100,9 @@ const htmlContent = parseMarkdown(post.body_markdown);
 
   </Layout>
 
-<script>
+<script define:vars={{ slug, post }}>
   if (typeof window !== 'undefined' && window.posthog) {
-    posthog.capture('article_view', {
+    window.posthog.capture('article_view', {
       page_path: `/blog/${slug}`,
       page_title: post.title,
       page_type: 'article',
@@ -114,6 +114,7 @@ const htmlContent = parseMarkdown(post.body_markdown);
 
     // Track scroll depth
     let maxScroll = 0;
+    const articleSlug = slug;
     const trackScroll = () => {
       const scrollPercent = Math.round(
         ((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight) * 100
@@ -124,8 +125,8 @@ const htmlContent = parseMarkdown(post.body_markdown);
 
         // Track milestones: 25%, 50%, 75%, 100%
         if ([25, 50, 75, 100].includes(scrollPercent)) {
-          posthog.capture('article_scroll', {
-            article_slug: slug,
+          window.posthog?.capture('article_scroll', {
+            article_slug: articleSlug,
             scroll_depth: scrollPercent
           });
         }

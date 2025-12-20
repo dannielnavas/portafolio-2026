@@ -28,7 +28,7 @@ const { post } = Astro.props;
   if (linkElement) {
     linkElement.addEventListener('click', () => {
       if (typeof window !== 'undefined' && window.posthog) {
-        posthog.capture('blog_post_click', {
+        window.posthog.capture('blog_post_click', {
           post_slug: linkElement.getAttribute('data-post-slug'),
           post_title: linkElement.getAttribute('data-post-title'),
           page_type: 'blog_list'
