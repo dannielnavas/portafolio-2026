@@ -1,0 +1,47 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+---
+
+<Layout
+  title="404 - Página no encontrada | Danniel Navas"
+  description="La página que buscas no existe o ha sido movida."
+  canonicalURL="https://danniel.dev/404"
+>
+  <Header />
+  <hr class="border-gray-100">
+
+  <div class="flex flex-col items-center justify-center py-24 space-y-8 text-center">
+    <div class="space-y-4">
+      <h1 class="text-6xl font-bold text-black tracking-tight">404</h1>
+      <p class="text-xl text-gray-600 font-medium">
+        Página no encontrada
+      </p>
+    </div>
+
+    <p class="text-lg text-gray-500 max-w-md leading-relaxed">
+      La página que buscas no existe o ha sido movida.
+      Puede que el enlace esté roto o que hayas escrito mal la URL.
+    </p>
+
+    <div class="pt-4">
+      <a
+        href="/"
+        class="link-hover inline-block text-lg font-semibold text-black"
+      >
+        Volver al inicio →
+      </a>
+    </div>
+  </div>
+
+  <Footer />
+</Layout>
+<script>
+  if (typeof window !== 'undefined' && (window as any).posthog) {
+    (window as any).posthog.capture('404_page_view', {
+      page_path: window.location.pathname,
+      page_title: '404 - Page Not Found'
+    });
+  }
+</script>
