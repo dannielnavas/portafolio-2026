@@ -1,0 +1,33 @@
+---
+import SearchInput from './SearchInput.astro';
+
+interface Props {
+    title?: string;
+    description?: string;
+    totalPosts?: number;
+    searchPlaceholder?: string;
+}
+
+const {
+    title = 'Escritura',
+    description = 'Reflexiones sobre ingeniería de software, arquitectura frontend y la vida como creador de productos.',
+    totalPosts = 0,
+    searchPlaceholder = 'Buscar artículos (ej. React, Carrera, IA)...'
+} = Astro.props;
+---
+
+<header class="mb-12">
+
+    <h2 class="text-3xl font-bold tracking-tight text-black mb-4">Comparto lo que aprendo construyendo software</h2>
+    <p class="text-lg text-gray-600 leading-relaxed mb-8">
+        Artículos sobre <strong>frontend</strong>, <strong>fullstack</strong>,
+        <strong>JavaScript</strong>, arquitectura y productos digitales.
+        {totalPosts > 0 && (
+            <span class="text-gray-700 block mt-2 text-sm">
+                {totalPosts} {totalPosts === 1 ? 'artículo' : 'artículos'} publicados en total.
+            </span>
+        )}
+    </p>
+
+    <SearchInput placeholder={searchPlaceholder} />
+</header>

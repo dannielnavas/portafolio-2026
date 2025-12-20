@@ -1,0 +1,27 @@
+---
+interface Props {
+    homeUrl?: string;
+    authorName?: string;
+    authorImage?: string;
+}
+
+const { homeUrl = '/', authorName = 'Danniel Navas', authorImage = '/danniel.webp' } = Astro.props;
+---
+
+<nav class="mb-12 flex justify-between items-center">
+    <a href={homeUrl} class="group flex items-center gap-2 text-sm text-gray-500 hover:text-black transition-colors">
+        <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-100">
+            <img
+                src={authorImage}
+                alt={authorName}
+                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"
+                loading="lazy"
+            />
+        </div>
+        <span class="font-medium">{authorName}</span>
+    </a>
+
+    <a href={homeUrl} class="text-sm text-gray-500 hover:text-black transition-colors">
+        Inicio
+    </a>
+</nav>

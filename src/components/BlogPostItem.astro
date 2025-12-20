@@ -1,0 +1,22 @@
+---
+import type { IArticle } from '@/models/articles.ts';
+
+interface Props {
+    post: IArticle;
+}
+
+const { post } = Astro.props;
+---
+
+<a
+    href={`/blog/${post.slug}`}
+    class="post-item group flex flex-col sm:flex-row sm:items-baseline justify-between py-3 px-2 -mx-2 rounded-md hover:bg-gray-50 transition-colors"
+    aria-label={`Leer artículo: ${post.title}`}
+>
+    <h3 class="text-base font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+        {post.title}
+    </h3>
+    <span class="text-sm text-gray-500 font-mono tabular-nums shrink-0 mt-1 sm:mt-0 sm:ml-4">
+        {post.readable_publish_date}
+    </span>
+</a>

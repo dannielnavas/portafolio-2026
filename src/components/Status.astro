@@ -1,0 +1,20 @@
+---
+const statusColors = {
+    "green": "text-green-700 bg-green-50 px-2 py-0.5 rounded-full font-medium text-[13px] border border-green-100",
+    "blue": "text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full font-medium text-[13px] border border-blue-100",
+    "orange": "text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full font-medium text-[13px] border border-orange-100",
+    "red": "text-red-800 bg-red-50 px-2 py-0.5 rounded-full font-medium text-[13px] border border-red-100", /* red-800 para mejor contraste WCAG AA */
+};
+
+type StatusColor = keyof typeof statusColors;
+
+const {
+    label,
+    color,
+} = Astro.props;
+
+if (!label || !color) {
+    return null;
+}
+---
+<span class={statusColors[color as StatusColor]}>{label}</span>

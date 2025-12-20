@@ -1,0 +1,20 @@
+---
+import Status from "./Status.astro";
+
+const {
+    title,
+    description,
+    link,
+    status,
+    statusColor = "green",
+} = Astro.props;
+---
+<li class="group">
+    <div class="flex justify-between items-baseline mb-1">
+        <a href={link} target="_blank" rel="noopener noreferrer" class="link-hover text-lg">{title}</a>
+        <Status label={status} color={statusColor} />
+    </div>
+    <p class="text-gray-600">
+        {description}
+    </p>
+</li>

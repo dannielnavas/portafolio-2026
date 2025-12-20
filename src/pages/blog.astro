@@ -1,0 +1,64 @@
+---
+import Footer from '@/components/Footer.astro';
+import Layout from '@/layouts/Layout.astro';
+import BlogNavigation from '@/components/BlogNavigation.astro';
+import BlogHeader from '@/components/BlogHeader.astro';
+import BlogPostList from '@/components/BlogPostList.astro';
+import { getPostDevto } from '@/services/posts.ts';
+import { groupPostsByYear } from '@/utils/posts.ts';
+
+const posts = await getPostDevto();
+const postsByYear = groupPostsByYear(posts);
+---
+
+<Layout
+title="Blog de Desarrollo Frontend & Fullstack | Danniel Navas"
+description="Blog de Danniel Navas sobre desarrollo frontend y fullstack, JavaScript y crecimiento profesional, basado en experiencia real construyendo productos digitales."
+canonicalURL="https://danniel.dev/blog"
+>
+    <BlogNavigation />
+
+    <BlogHeader totalPosts={posts.length} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Blog de Desarrollo de Danniel Navas",
+      "url": "https://danniel.dev/blog",
+      "description": "Blog de Danniel Navas sobre desarrollo frontend y fullstack, JavaScript y crecimiento profesional, basado en experiencia real construyendo productos digitales.",
+      "author": {
+        "@type": "Person",
+        "name": "Danniel Navas",
+        "url": "https://danniel.dev",
+        "sameAs": [
+          "https://dev.to/dannieldev",
+          "https://github.com/dannielnavas",
+          "https://www.linkedin.com/in/luis-daniel-gordo-navas",
+          "https://x.com/DevDanniel"
+        ]
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Danniel Navas",
+        "url": "https://danniel.dev"
+      },
+      "blogPost": posts.slice(0, 10).map((post) => ({
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "description": post.description,
+        "url": `https://danniel.dev/blog/${post.slug}`,
+        "datePublished": post.published_at,
+        "dateModified": post.edited_at || post.published_at,
+        "author": {
+          "@type": "Person",
+          "name": "Danniel Navas"
+        },
+        "image": post.cover_image || post.social_image || null,
+        "keywords": post.tags || post.tag_list || []
+      }))
+    })} />
+
+    <BlogPostList postsByYear={postsByYear} />
+
+    <Footer />
+</Layout>

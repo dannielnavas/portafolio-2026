@@ -1,0 +1,101 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { getPostDevto, getPostDevtoBySlug } from '@/services/posts.ts';
+import type { IArticle } from '@/models/articles.ts';
+import { parseMarkdown } from '@/utils/markdown.ts';
+import { isValidSlug } from '@/utils/validation.ts';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import ArticleHeader from '@/components/ArticleHeader.astro';
+import AuthorBox from '@/components/AuthorBox.astro';
+
+export async function getStaticPaths() {
+    try {
+        const posts = await getPostDevto();
+        return posts
+            .filter((post: IArticle) => isValidSlug(post.slug))
+            .map((post: IArticle) => ({
+                params: { slug: post.slug },
+            }));
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        return [];
+    }
+}
+
+const { slug } = Astro.params;
+
+// Validar que el slug existe y es válido
+if (!isValidSlug(slug)) {
+    return new Response(null, {
+        status: 404,
+        statusText: 'Not Found'
+    });
+}
+
+const post = await getPostDevtoBySlug(slug!);
+
+if (!post) {
+    return new Response(null, {
+        status: 404,
+        statusText: 'Not Found'
+    });
+}
+
+const htmlContent = parseMarkdown(post.body_markdown);
+---
+
+<Layout
+    title={post.title}
+    description={post.description}
+    canonicalURL={`https://danniel.dev/blog/${slug}`}
+>
+    <article class="max-w-[680px] w-full">
+        <Breadcrumb href="/blog" label="Volver al blog" />
+
+        <ArticleHeader article={post} />
+
+        <div class="prose prose-lg max-w-none" set:html={htmlContent} />
+
+        <AuthorBox
+            name="Danniel Navas"
+            role="Senior Product Engineer"
+            bio="Escribo sobre la intersección entre buena ingeniería y gran experiencia de usuario."
+            twitterUrl="https://x.com/DevDanniel"
+        />
+    </article>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": post.title,
+      "description": post.description,
+      "image": post.cover_image || post.social_image || `${Astro.site ?? 'https://danniel.dev'}/og/home.png`,
+      "author": {
+        "@type": "Person",
+        "name": "Danniel Navas",
+        "url": "https://danniel.dev",
+        "sameAs": [
+          "https://dev.to/dannieldev",
+          "https://github.com/dannielnavas",
+          "https://www.linkedin.com/in/luis-daniel-gordo-navas",
+          "https://x.com/DevDanniel"
+        ]
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Danniel Navas",
+        "url": "https://danniel.dev"
+      },
+      "datePublished": post.published_at,
+      "dateModified": post.edited_at || post.published_at,
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": Astro.url.href
+      },
+      "url": Astro.url.href,
+      "keywords": post.tags || post.tag_list || [],
+      "articleSection": "Desarrollo Web",
+      "wordCount": post.body_markdown.split(/\s+/).length,
+      "timeRequired": `PT${post.reading_time_minutes}M`
+    })} />
+
+</Layout>
