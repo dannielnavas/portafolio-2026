@@ -11,11 +11,11 @@ const posts = await getPostDevto();
 const postsByYear = groupPostsByYear(posts);
 ---
 
-<Layout
-title="Blog de Desarrollo Frontend & Fullstack | Danniel Navas"
-description="Blog de Danniel Navas sobre desarrollo frontend y fullstack, JavaScript y crecimiento profesional, basado en experiencia real construyendo productos digitales."
-canonicalURL="https://danniel.dev/blog"
->
+  <Layout
+    title="Blog de Desarrollo Frontend & Fullstack | Danniel Navas"
+    description="Blog de Danniel Navas sobre desarrollo frontend y fullstack, JavaScript y crecimiento profesional, basado en experiencia real construyendo productos digitales."
+    canonicalURL="https://danniel.dev/blog"
+  >
     <BlogNavigation />
 
     <BlogHeader totalPosts={posts.length} />
@@ -61,4 +61,4 @@ canonicalURL="https://danniel.dev/blog"
     <BlogPostList postsByYear={postsByYear} />
 
     <Footer />
-</Layout>
+  </Layout>

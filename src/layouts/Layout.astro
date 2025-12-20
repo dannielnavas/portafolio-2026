@@ -2,7 +2,7 @@
 import '@/styles/global.css';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/600.css';
-
+import PostHog from '@/components/posthog.astro';
 
 const {
     title = 'Daniel Navas - Desarrollador Web',
@@ -63,6 +63,7 @@ const canonical = canonicalURL ?? siteUrl;
 
     <!-- Performance -->
     <meta name="theme-color" content="#ffffff" />
+    <PostHog />
   </head>
 
   <body class="antialiased min-h-screen flex justify-center py-16 px-6 sm:px-12 bg-white selection:bg-gray-100">
