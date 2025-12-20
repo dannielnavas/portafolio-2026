@@ -11,10 +11,34 @@ const {
 ---
 <li class="group">
     <div class="flex justify-between items-baseline mb-1">
-        <a href={link} target="_blank" rel="noopener noreferrer" class="link-hover text-lg">{title}</a>
+        <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link-hover text-lg"
+            data-project-title={title}
+            data-project-status={status}
+        >
+            {title}
+        </a>
         <Status label={status} color={statusColor} />
     </div>
     <p class="text-gray-600">
         {description}
     </p>
 </li>
+
+<script>
+  const linkElement = document.currentScript?.previousElementSibling?.querySelector('a[data-project-title]');
+  if (linkElement) {
+    linkElement.addEventListener('click', () => {
+      if (typeof window !== 'undefined' && window.posthog) {
+        posthog.capture('project_click', {
+          project_title: linkElement.getAttribute('data-project-title'),
+          project_status: linkElement.getAttribute('data-project-status'),
+          project_url: linkElement.href
+        });
+      }
+    });
+  }
+</script>

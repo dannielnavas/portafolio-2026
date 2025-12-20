@@ -12,6 +12,8 @@ const { post } = Astro.props;
     href={`/blog/${post.slug}`}
     class="post-item group flex flex-col sm:flex-row sm:items-baseline justify-between py-3 px-2 -mx-2 rounded-md hover:bg-gray-50 transition-colors"
     aria-label={`Leer artículo: ${post.title}`}
+    data-post-slug={post.slug}
+    data-post-title={post.title}
 >
     <h3 class="text-base font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
         {post.title}
@@ -20,3 +22,18 @@ const { post } = Astro.props;
         {post.readable_publish_date}
     </span>
 </a>
+
+<script>
+  const linkElement = document.currentScript?.previousElementSibling;
+  if (linkElement) {
+    linkElement.addEventListener('click', () => {
+      if (typeof window !== 'undefined' && window.posthog) {
+        posthog.capture('blog_post_click', {
+          post_slug: linkElement.getAttribute('data-post-slug'),
+          post_title: linkElement.getAttribute('data-post-title'),
+          page_type: 'blog_list'
+        });
+      }
+    });
+  }
+</script>

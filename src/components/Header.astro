@@ -35,11 +35,25 @@ import { Icon } from 'astro-icon/components';
     </div>
 
     <div class="flex gap-6 text-gray-500 pt-2">
-        <a href="https://linkedin.com/in/luis-daniel-gordo-navas" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors transform hover:scale-110 duration-200" aria-label="LinkedIn"><Icon name="entypo-social:linkedin" size={24} /></a>
-        <a href="https://github.com/dannielnavas" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors transform hover:scale-110 duration-200" aria-label="GitHub"><Icon name="entypo-social:github" size={24} /></a>
-        <a href="https://youtube.com/@dannieldev2563" target="_blank" rel="noopener noreferrer" class="hover:text-red-600 transition-colors transform hover:scale-110 duration-200" aria-label="YouTube"><Icon name="entypo-social:youtube" size={24} /></a>
-        <a href="https://x.com/DevDanniel" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors transform hover:scale-110 duration-200" aria-label="X"><Icon name="entypo-social:twitter" size={24} /></a>
+        <a href="https://linkedin.com/in/luis-daniel-gordo-navas" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors transform hover:scale-110 duration-200" aria-label="LinkedIn" data-social="linkedin"><Icon name="entypo-social:linkedin" size={24} /></a>
+        <a href="https://github.com/dannielnavas" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors transform hover:scale-110 duration-200" aria-label="GitHub" data-social="github"><Icon name="entypo-social:github" size={24} /></a>
+        <a href="https://youtube.com/@dannieldev2563" target="_blank" rel="noopener noreferrer" class="hover:text-red-600 transition-colors transform hover:scale-110 duration-200" aria-label="YouTube" data-social="youtube"><Icon name="entypo-social:youtube" size={24} /></a>
+        <a href="https://x.com/DevDanniel" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors transform hover:scale-110 duration-200" aria-label="X" data-social="twitter"><Icon name="entypo-social:twitter" size={24} /></a>
     </div>
+
+<script>
+  document.querySelectorAll('a[data-social]').forEach(link => {
+    link.addEventListener('click', () => {
+      if (typeof window !== 'undefined' && window.posthog) {
+        posthog.capture('social_link_click', {
+          social_platform: link.getAttribute('data-social'),
+          social_url: link.href,
+          location: 'header'
+        });
+      }
+    });
+  });
+</script>
 </header>
 
 <p class="sr-only">

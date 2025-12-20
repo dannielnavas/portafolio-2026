@@ -23,3 +23,45 @@ const {
         aria-label={placeholder}
     />
 </div>
+
+<script>
+  const searchInput = document.getElementById('blog-search');
+  if (searchInput) {
+    let searchTimeout: ReturnType<typeof setTimeout>;
+    let lastSearchTerm = '';
+
+    searchInput.addEventListener('input', (e) => {
+      const target = e.target as HTMLInputElement;
+      const searchTerm = target.value.trim();
+
+      // Clear previous timeout
+      clearTimeout(searchTimeout);
+
+      // Only track if search term changed and has at least 2 characters
+      if (searchTerm !== lastSearchTerm && searchTerm.length >= 2) {
+        searchTimeout = setTimeout(() => {
+          if (typeof window !== 'undefined' && window.posthog) {
+            posthog.capture('blog_search', {
+              search_term: searchTerm,
+              search_length: searchTerm.length
+            });
+          }
+          lastSearchTerm = searchTerm;
+        }, 500); // Debounce de 500ms
+      }
+    });
+
+    // Track when user presses Enter
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const searchTerm = (e.target as HTMLInputElement).value.trim();
+        if (searchTerm && typeof window !== 'undefined' && window.posthog) {
+          posthog.capture('blog_search_submit', {
+            search_term: searchTerm,
+            search_length: searchTerm.length
+          });
+        }
+      }
+    });
+  }
+</script>

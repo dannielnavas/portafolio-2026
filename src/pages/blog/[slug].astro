@@ -99,3 +99,39 @@ const htmlContent = parseMarkdown(post.body_markdown);
       })} />
 
   </Layout>
+
+<script>
+  if (typeof window !== 'undefined' && window.posthog) {
+    posthog.capture('article_view', {
+      page_path: `/blog/${slug}`,
+      page_title: post.title,
+      page_type: 'article',
+      article_slug: slug,
+      article_title: post.title,
+      reading_time_minutes: post.reading_time_minutes,
+      tags: post.tags || post.tag_list || []
+    });
+
+    // Track scroll depth
+    let maxScroll = 0;
+    const trackScroll = () => {
+      const scrollPercent = Math.round(
+        ((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight) * 100
+      );
+
+      if (scrollPercent > maxScroll && scrollPercent >= 25) {
+        maxScroll = scrollPercent;
+
+        // Track milestones: 25%, 50%, 75%, 100%
+        if ([25, 50, 75, 100].includes(scrollPercent)) {
+          posthog.capture('article_scroll', {
+            article_slug: slug,
+            scroll_depth: scrollPercent
+          });
+        }
+      }
+    };
+
+    window.addEventListener('scroll', trackScroll, { passive: true });
+  }
+</script>
