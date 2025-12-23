@@ -1,28 +1,49 @@
 ---
-import { Icon } from 'astro-icon/components';
 ---
-<section class="space-y-8">
-    <h2 class="text-xs font-bold text-gray-700 uppercase tracking-widest">Lo que enseño</h2>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <a href="https://youtube.com/@dannieldev2563" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200">
-            <div class="flex items-center gap-2 mb-2 text-red-600">
-                <Icon name="entypo-social:youtube" size={16} />
-                <span class="text-xs font-bold text-gray-500 uppercase">Video Reciente</span>
-            </div>
-            <h3 class="font-semibold text-gray-900 leading-tight group-hover:underline decoration-gray-400 underline-offset-4">
-                Instalación y configuración sistema operativo Linux
-            </h3>
+<section class="container mx-auto px-4 py-16 max-w-2xl border-t">
+    <h2 class="text-xs font-semibold mb-8 uppercase tracking-wider text-muted-foreground">Lo que enseño</h2>
+    <div class="mb-12">
+      <div class="flex items-baseline justify-between mb-6">
+        <h3 class="text-base font-medium text-foreground">Videos</h3>
+        <a
+          href="https://www.youtube.com/@dannielnavas"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Ver todos →
         </a>
+      </div>
 
-        <a href="/blog" class="group block p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200">
-            <div class="flex items-center gap-2 mb-2 text-gray-700">
-                <Icon name="ph:pencil-simple" size={16} />
-                <span class="text-xs font-bold text-gray-500 uppercase">Artículo</span>
-            </div>
-            <h3 class="font-semibold text-gray-900 leading-tight group-hover:underline decoration-gray-400 underline-offset-4">
-                Cómo mostrar tus artículos de GitHub dinámicamente
-            </h3>
+      <div class="space-y-4">
+        <a href="https://www.youtube.com/@dannielnavas" target="_blank" rel="noopener noreferrer" class="block group">
+          <div class="space-y-1">
+            <h4 class="text-sm font-medium text-foreground group-hover:text-foreground/70 transition-colors">
+              Instalación y configuración sistema operativo Linux
+            </h4>
+            <p class="text-xs text-muted-foreground">Video reciente</p>
+          </div>
         </a>
+      </div>
     </div>
-</section>
+
+    <div>
+      <div class="flex items-baseline justify-between mb-6">
+        <h3 class="text-base font-medium text-foreground">Artículos</h3>
+        <a href="/blog" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          Ver todos →
+        </a>
+      </div>
+
+      <div class="space-y-4">
+        <a href="/blog/como-mostrar-tus-articulos-videos-etc-en-tu-readme-de-github-2ek1"  rel="noopener noreferrer" class="block group">
+          <div class="space-y-1">
+            <h4 class="text-sm font-medium text-foreground group-hover:text-foreground/70 transition-colors">
+              Cómo mostrar tus artículos de GitHub dinámicamente
+            </h4>
+            <p class="text-xs text-muted-foreground">Artículo</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
