@@ -1,0 +1,33 @@
+---
+import Header from '@/components/Header.astro';
+import Layout from '@/layouts/Layout.astro';
+import Projects from '@/components/Projects.astro';
+import Teach from '@/components/Teach.astro';
+import Footer from '@/components/Footer.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const t = useTranslations('en');
+---
+
+<Layout
+title={t('site.title')}
+description={t('site.description')}
+canonicalURL="https://danniel.dev/en"
+>
+  <Header />
+  <hr class="border-gray-100">
+  <Projects />
+  <Teach />
+  <Footer />
+</Layout>
+
+<script>
+  if (typeof window !== 'undefined' && window.posthog) {
+    window.posthog.capture('page_view', {
+      page_path: '/en',
+      page_title: 'Home',
+      page_type: 'home',
+      locale: 'en'
+    });
+  }
+</script>

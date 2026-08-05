@@ -1,17 +1,22 @@
 ---
 import type { IArticle } from '@/models/articles.ts';
+import { getLangFromUrl, useTranslatedPath } from '@/i18n/utils';
+
+const lang = Astro.currentLocale ?? getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
 
 interface Props {
     post: IArticle;
 }
 
 const { post } = Astro.props;
+const readLabel = lang === 'en' ? 'Read article' : 'Leer artículo';
 ---
 
 <a
-    href={`/blog/${post.slug}`}
+    href={translatePath(`/blog/${post.slug}`)}
     class="post-item group flex flex-col sm:flex-row sm:items-baseline justify-between py-3 px-2 -mx-2 rounded-md hover:bg-gray-50 transition-colors"
-    aria-label={`Leer artículo: ${post.title}`}
+    aria-label={`${readLabel}: ${post.title}`}
     data-post-slug={post.slug}
     data-post-title={post.title}
 >

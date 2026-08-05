@@ -1,17 +1,22 @@
 ---
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/utils';
+
+const lang = Astro.currentLocale ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
 ---
 <section class="container mx-auto px-4 py-16 max-w-2xl border-t">
-    <h2 class="text-xs font-semibold mb-8 uppercase tracking-wider text-muted-foreground">Lo que enseño</h2>
+    <h2 class="text-xs font-semibold mb-8 uppercase tracking-wider text-muted-foreground">{t('teach.heading')}</h2>
     <div class="mb-12">
       <div class="flex items-baseline justify-between mb-6">
-        <h3 class="text-base font-medium text-foreground">Videos</h3>
+        <h3 class="text-base font-medium text-foreground">{t('teach.videos')}</h3>
         <a
           href="https://www.youtube.com/@dannieldev2563"
           target="_blank"
           rel="noopener noreferrer"
           class="text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
-          Ver todos →
+          {t('teach.viewAll')}
         </a>
       </div>
 
@@ -21,7 +26,7 @@
             <h4 class="text-sm font-medium text-foreground group-hover:text-foreground/70 transition-colors">
               Instalación y configuración sistema operativo Linux
             </h4>
-            <p class="text-xs text-muted-foreground">Video reciente</p>
+            <p class="text-xs text-muted-foreground">{t('teach.recentVideo')}</p>
           </div>
         </a>
       </div>
@@ -29,19 +34,19 @@
 
     <div>
       <div class="flex items-baseline justify-between mb-6">
-        <h3 class="text-base font-medium text-foreground">Artículos</h3>
-        <a href="/blog" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
-          Ver todos →
+        <h3 class="text-base font-medium text-foreground">{t('teach.articles')}</h3>
+        <a href={translatePath('/blog')} rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          {t('teach.viewAll')}
         </a>
       </div>
 
       <div class="space-y-4">
-        <a href="/blog/como-mostrar-tus-articulos-videos-etc-en-tu-readme-de-github-2ek1"  rel="noopener noreferrer" class="block group">
+        <a href={translatePath('/blog/como-mostrar-tus-articulos-videos-etc-en-tu-readme-de-github-2ek1')}  rel="noopener noreferrer" class="block group">
           <div class="space-y-1">
             <h4 class="text-sm font-medium text-foreground group-hover:text-foreground/70 transition-colors">
               Cómo mostrar tus artículos de GitHub dinámicamente
             </h4>
-            <p class="text-xs text-muted-foreground">Artículo</p>
+            <p class="text-xs text-muted-foreground">{t('teach.article')}</p>
           </div>
         </a>
       </div>

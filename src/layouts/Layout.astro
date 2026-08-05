@@ -3,18 +3,25 @@ import '@/styles/global.css';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/600.css';
 import PostHog from '@/components/posthog.astro';
+import { getLangFromUrl, useTranslations, getLocalizedPaths } from '@/i18n/utils';
+
+const lang = Astro.currentLocale ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const {
-    title = 'Daniel Navas - Desarrollador Web',
-    description = 'Senior Product Engineer con más de 13 años construyendo productos digitales sobrios, útiles y duraderos.',
+    title = t('site.title'),
+    description = t('site.description'),
     canonicalURL = 'https://danniel.dev',
 } = Astro.props;
 
 const siteUrl = Astro.site ?? 'https://danniel.dev';
 const canonical = canonicalURL ?? siteUrl;
+const ogLocale = lang === 'en' ? 'en_US' : 'es_ES';
+
+const localizedPaths = getLocalizedPaths(Astro.url.pathname);
 ---
 <!DOCTYPE html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <!-- Basic -->
     <meta charset="utf-8" />
@@ -26,6 +33,11 @@ const canonical = canonicalURL ?? siteUrl;
 
     <!-- Canonical -->
     <link rel="canonical" href={canonical} />
+
+    <!-- Alternate languages -->
+    <link rel="alternate" hreflang="es" href={new URL(localizedPaths.es, siteUrl).href} />
+    <link rel="alternate" hreflang="en" href={new URL(localizedPaths.en, siteUrl).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(localizedPaths.es, siteUrl).href} />
 
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -39,7 +51,7 @@ const canonical = canonicalURL ?? siteUrl;
     />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Danniel Navas" />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:image" content="https://danniel.dev/og/home.png" />
 
 

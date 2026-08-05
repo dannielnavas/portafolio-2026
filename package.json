@@ -9,12 +9,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/sitemap": "3.7.0",
     "@fontsource/inter": "^5.2.8",
     "@iconify-json/entypo-social": "^1.2.3",
     "@iconify-json/ph": "^1.2.2",
     "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.16.5",
+    "astro": "5.17.1",
     "astro-icon": "^1.1.5",
     "marked": "^17.0.1",
     "prismjs": "^1.30.0",

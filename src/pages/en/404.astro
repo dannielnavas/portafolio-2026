@@ -1,16 +1,15 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Footer from '@/components/Footer.astro';
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import { useTranslations } from '@/i18n/utils';
 
-const lang = Astro.currentLocale ?? getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+const t = useTranslations('en');
 ---
 
 <Layout
   title={t('404.title')}
   description={t('404.description')}
-  canonicalURL="https://danniel.dev/404"
+  canonicalURL="https://danniel.dev/en/404"
 >
   <hr class="border-gray-100">
 
@@ -28,7 +27,7 @@ const t = useTranslations(lang);
 
     <div class="pt-4">
       <a
-        href="/"
+        href="/en"
         class="link-hover inline-block text-lg font-semibold text-black"
       >
         {t('nav.backHome')}
@@ -42,7 +41,8 @@ const t = useTranslations(lang);
   if (typeof window !== 'undefined' && (window as any).posthog) {
     (window as any).posthog.capture('404_page_view', {
       page_path: window.location.pathname,
-      page_title: '404 - Page Not Found'
+      page_title: '404 - Page Not Found',
+      locale: 'en'
     });
   }
 </script>

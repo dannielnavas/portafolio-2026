@@ -1,9 +1,14 @@
 ---
 import CardProjects from '@/components/CardProjects.astro';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
+const lang = Astro.currentLocale ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
 const projects = [
     {
         title: "DevtoSpanish",
-        description: "DevToSpanish es un agregador de contenido técnico que centraliza artículos de Dev.to en español para la comunidad hispana y suma 515 vistas totales estimadas.",
+        description: t('projects.devtospanish.description'),
         link: "https://devtospanish.danniel.dev",
         status: "Open Source",
         statusColor: "orange"
@@ -11,7 +16,7 @@ const projects = [
 
     {
         title: "Podcastrek",
-        description: " Aplicación para Android que permite escuchar el podcast 'El Lavadero Sónico', perteneciente a la comunidad de Star Trek Colombia. ",
+        description: t('projects.podcastrek.description'),
         link: "https://github.com/dannielnavas/podcasttreknext/releases",
         status: "Mobile App",
         statusColor: "blue"
@@ -19,7 +24,7 @@ const projects = [
 ]
 ---
 <section class="space-y-8">
-    <h2 class="text-xs font-bold text-gray-700 uppercase tracking-widest">Lo que construyo</h2>
+    <h2 class="text-xs font-bold text-gray-700 uppercase tracking-widest">{t('projects.heading')}</h2>
 
     <ul class="space-y-8">
         {projects.map((project) => (

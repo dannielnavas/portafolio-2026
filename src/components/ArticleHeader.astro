@@ -1,5 +1,9 @@
 ---
 import type { IArticle } from '@/models/articles.ts';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
+const lang = Astro.currentLocale ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 interface Props {
     article: IArticle;
@@ -12,7 +16,7 @@ const { article } = Astro.props;
     <div class="flex items-center gap-3 text-sm text-gray-500 font-medium mb-4 flex-wrap">
         <time datetime={article.published_timestamp}>{article.readable_publish_date}</time>
         <span aria-hidden="true">•</span>
-        <span>{article.reading_time_minutes} min de lectura</span>
+        <span>{article.reading_time_minutes} {t('article.readingTime')}</span>
         {article.tags && article.tags.length > 0 && (
             <>
                 <span aria-hidden="true">•</span>

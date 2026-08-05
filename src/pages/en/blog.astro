@@ -1,0 +1,79 @@
+---
+import Footer from '@/components/Footer.astro';
+import Layout from '@/layouts/Layout.astro';
+import BlogNavigation from '@/components/BlogNavigation.astro';
+import BlogHeader from '@/components/BlogHeader.astro';
+import BlogPostList from '@/components/BlogPostList.astro';
+import { getPostDevto } from '@/services/posts.ts';
+import { groupPostsByYear } from '@/utils/posts.ts';
+import { useTranslations } from '@/i18n/utils';
+
+const t = useTranslations('en');
+
+const posts = await getPostDevto();
+const postsByYear = groupPostsByYear(posts);
+---
+
+  <Layout
+    title="Frontend & Fullstack Development Blog | Danniel Navas"
+    description="Danniel Navas' blog about frontend and fullstack development, JavaScript and professional growth, based on real experience building digital products."
+    canonicalURL="https://danniel.dev/en/blog"
+  >
+    <BlogNavigation />
+
+    <BlogHeader totalPosts={posts.length} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Danniel Navas' Development Blog",
+      "url": "https://danniel.dev/en/blog",
+      "description": "Danniel Navas' blog about frontend and fullstack development, JavaScript and professional growth, based on real experience building digital products.",
+      "author": {
+        "@type": "Person",
+        "name": "Danniel Navas",
+        "url": "https://danniel.dev",
+        "sameAs": [
+          "https://dev.to/dannieldev",
+          "https://github.com/dannielnavas",
+          "https://www.linkedin.com/in/luis-daniel-gordo-navas",
+          "https://x.com/DevDanniel"
+        ]
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Danniel Navas",
+        "url": "https://danniel.dev"
+      },
+      "blogPost": posts.slice(0, 10).map((post) => ({
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "description": post.description,
+        "url": `https://danniel.dev/en/blog/${post.slug}`,
+        "datePublished": post.published_at,
+        "dateModified": post.edited_at || post.published_at,
+        "author": {
+          "@type": "Person",
+          "name": "Danniel Navas"
+        },
+        "image": post.cover_image || post.social_image || null,
+        "keywords": post.tags || post.tag_list || []
+      }))
+    })} />
+
+    <BlogPostList postsByYear={postsByYear} />
+
+    <Footer />
+  </Layout>
+
+<script define:vars={{ posts }}>
+  if (typeof window !== 'undefined' && window.posthog) {
+    window.posthog.capture('blog_page_view', {
+      page_path: '/en/blog',
+      page_title: 'Blog',
+      page_type: 'blog',
+      total_posts: posts.length,
+      locale: 'en'
+    });
+  }
+</script>

@@ -1,8 +1,13 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/utils';
+
+const lang = Astro.currentLocale ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
 ---
 <header class="flex flex-col gap-6">
-    <a href="/" class="block w-20 h-20 rounded-full overflow-hidden hover:opacity-90 transition-opacity shadow-sm">
+    <a href={translatePath('/')} class="block w-20 h-20 rounded-full overflow-hidden hover:opacity-90 transition-opacity shadow-sm">
         <img src="/danniel.webp"
              alt="Danniel Navas"
              class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
@@ -10,27 +15,22 @@ import { Icon } from 'astro-icon/components';
 
     <div>
         <p class="text-3xl font-bold tracking-tight text-black mb-2">
-            Hola, soy Danniel.
+            {t('header.greeting')}
         </p>
 
         <h1 class="text-xl text-gray-700 font-medium">
-            Software Engineer Frontend & Fullstack con más de 13 años creando productos digitales
+            {t('header.title')}
           </h1>
     </div>
 
     <div class="text-lg text-gray-800 leading-relaxed space-y-4">
 
         <p>
-            Soy software engineer frontend y fullstack con más de 13 años de experiencia
-            creando productos digitales útiles y escalables.
+            {t('header.p1')}
           </p>
+          <p set:html={t('header.p2')} />
           <p>
-            Me enfoco en escribir buen código, tomar buenas decisiones técnicas
-            y <strong>ayudar a otros desarrolladores a crecer</strong>.
-          </p>
-          <p>
-            Actualmente construyo productos propios, colaboro con equipos
-            y comparto conocimiento con la comunidad.
+            {t('header.p3')}
           </p>
     </div>
 

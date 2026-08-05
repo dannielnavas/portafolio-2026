@@ -1,25 +1,80 @@
-<footer class="pt-12 text-sm text-gray-500 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
-    <p>2025 Danniel Navas. Hecho con <span class="text-black font-medium">Astro</span> y <span class="text-black font-medium">Tailwind CSS</span>.</p>
-    <div class="flex gap-6 font-medium">
-        <a href="mailto:me@danniel.dev" class="hover:text-black transition-colors" data-social="email">Email</a>
-        <a href="https://github.com/dannielnavas" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors" data-social="github">GitHub</a>
-        <a href="https://youtube.com/@dannieldev2563" target="_blank" rel="noopener noreferrer" class="hover:text-red-600 transition-colors" data-social="youtube">YouTube</a>
-        <a href="https://x.com/DevDanniel" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors" data-social="twitter">X</a>
-    </div>
+---
+import { getLangFromUrl, useTranslations, getLocalizedPaths } from "@/i18n/utils";
+
+const lang = Astro.currentLocale ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const localizedPaths = getLocalizedPaths(Astro.url.pathname);
+---
+
+<footer
+  class="pt-12 text-sm text-gray-500 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4"
+>
+  <p>
+    2025 danniel.dev. {t("footer.builtWith")}
+    <span class="text-black font-medium">Astro</span>
+    {t("footer.and")}
+    <span class="text-black font-medium">Tailwind</span>.
+  </p>
+  <div class="flex gap-6 font-medium">
+    <a
+      href="mailto:me@danniel.dev"
+      class="hover:text-black transition-colors"
+      data-social="email">Email</a
+    >
+    <a
+      href="https://github.com/dannielnavas"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hover:text-black transition-colors"
+      data-social="github">GitHub</a
+    >
+    <a
+      href="https://youtube.com/@dannieldev2563"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hover:text-red-600 transition-colors"
+      data-social="youtube">YouTube</a
+    >
+    <a
+      href="https://x.com/DevDanniel"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hover:text-black transition-colors"
+      data-social="twitter">X</a
+    >
+    <span class="flex gap-2" aria-label={t("lang.switchLabel")}>
+      <a
+        href={localizedPaths.es}
+        class:list={[
+          "hover:text-black transition-colors",
+          lang === "es" && "text-black font-bold",
+        ]}
+        hreflang="es">ES</a
+      >
+      <span aria-hidden="true">/</span>
+      <a
+        href={localizedPaths.en}
+        class:list={[
+          "hover:text-black transition-colors",
+          lang === "en" && "text-black font-bold",
+        ]}
+        hreflang="en">EN</a
+      >
+    </span>
+  </div>
 </footer>
 
 <script>
-  document.querySelectorAll('footer a[data-social]').forEach(link => {
-    link.addEventListener('click', function () {
-      // Ensure proper typing
+  document.querySelectorAll("footer a[data-social]").forEach((link) => {
+    link.addEventListener("click", function () {
       if (
-        typeof window !== 'undefined' &&
-        typeof (window as any).posthog !== 'undefined'
+        typeof window !== "undefined" &&
+        typeof (window as any).posthog !== "undefined"
       ) {
-        (window as any).posthog.capture('social_link_click', {
-          social_platform: link.getAttribute('data-social'),
+        (window as any).posthog.capture("social_link_click", {
+          social_platform: link.getAttribute("data-social"),
           social_url: (link as HTMLAnchorElement).href,
-          location: 'footer'
+          location: "footer",
         });
       }
     });

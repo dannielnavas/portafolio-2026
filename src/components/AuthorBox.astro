@@ -1,4 +1,9 @@
 ---
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
+const lang = Astro.currentLocale ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
 interface Props {
     name: string;
     role: string;
@@ -10,7 +15,7 @@ interface Props {
 const {
     name = 'Danniel Navas',
     role = 'Senior Product Engineer',
-    bio = 'Escribo sobre la intersección entre buena ingeniería y gran experiencia de usuario.',
+    bio = t('authorBox.bio'),
     twitterUrl = 'https://x.com/DevDanniel',
     avatarUrl = '/danniel.webp',
 } = Astro.props;
@@ -25,20 +30,20 @@ const {
             loading="lazy"
         />
         <div>
-            <h3 class="font-bold text-lg mb-2">Escrito por {name}</h3>
+            <h3 class="font-bold text-lg mb-2">{t('authorBox.writtenBy')} {name}</h3>
             <p class="text-gray-600 text-sm mb-4 leading-relaxed">
                 {role}. {bio}
                 {twitterUrl && (
                     <>
-                        {' '}Si te gustó esto, sígueme en{' '}
+                        {' '}{t('authorBox.followIntro')}{' '}
                         <a
                             href={twitterUrl}
                             class="text-black font-semibold underline hover:text-gray-700 transition-colors"
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label={`Seguir a ${name} en Twitter`}
+                            aria-label={`${t('authorBox.followIntro')} ${name} - ${t('authorBox.followOn')}`}
                         >
-                            Twitter
+                            {t('authorBox.followOn')}
                         </a>.
                     </>
                 )}
